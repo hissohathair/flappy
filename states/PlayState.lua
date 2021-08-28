@@ -21,6 +21,8 @@ local NEXT_PIPE_MAX = 4
 BIRD_WIDTH = 38
 BIRD_HEIGHT = 24
 
+gLastPlayState = nil
+
 function PlayState:init()
     self.bird = Bird()
     self.pipePairs = {}
@@ -30,9 +32,16 @@ function PlayState:init()
 
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
     self.lastY = -PIPE_HEIGHT + math.random(80) + 20
+    gLastPlayState = self
 end
 
 function PlayState:update(dt)
+    -- check that the user hasn't tried to pause the game
+    if love.keyboard.wasPressed('p') then
+        gStateMachine:change('pause')
+        return
+    end
+
     -- update timer for pipe spawning
     self.timer = self.timer + dt
 
@@ -121,9 +130,19 @@ end
 --[[
     Called when this state is transitioned to from another state.
 ]]
-function PlayState:enter()
+function PlayState:enter(enterParams)
     -- if we're coming from death, restart scrolling
     scrolling = true
+
+    -- if enterParams passed, restore play state
+    if enterParams then
+        self.bird = enterParams.bird
+        self.pipePairs = enterParams.pipePairs
+        self.timer = enterParams.timer
+        self.next_pipe_time = enterParams.next_pipe_time
+        self.score = enterParams.score
+        self.lastY = enterParams.lastY    
+    end
 end
 
 --[[
