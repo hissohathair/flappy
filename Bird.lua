@@ -54,5 +54,10 @@ function Bird:update(dt)
 end
 
 function Bird:render()
-    love.graphics.draw(self.image, self.x, self.y)
+    if self.dy < 0 then
+        bird_angle = -0.10
+    else
+        bird_angle = 0
+    end
+    love.graphics.draw(self.image, self.x, self.y, bird_angle)
 end
