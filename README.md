@@ -7,6 +7,10 @@
  Assignment:
 
 * ~~Randomize the gap between pipes (vertical space).~~
-* Randomize the interval at which pairs of pipes spawn.
+* ~~Randomize the interval at which pairs of pipes spawn.~~
 * When a player enters the ScoreState, award them a “medal”.
 * Implement a pause feature.
+
+Images Credit: https://opengameart.org/content/cc0-award-icons
+
+

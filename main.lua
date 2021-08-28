@@ -136,6 +136,7 @@ end
 ]]
 function love.mousepressed(x, y, button)
     love.mouse.buttonsPressed[button] = true
+    print(string.format("DEBUG: Mouse click at %d,%d", x, y))
 end
 
 --[[
