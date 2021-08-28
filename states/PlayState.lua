@@ -13,7 +13,10 @@ PlayState = Class{__includes = BaseState}
 PIPE_SPEED = 60
 PIPE_WIDTH = 70
 PIPE_HEIGHT = 288
-local GAP_HEIGHT = 90
+
+local GAP_HEIGHT = 110 -- little larger to account for variance
+local NEXT_PIPE_MIN = 1.5
+local NEXT_PIPE_MAX = 4
 
 BIRD_WIDTH = 38
 BIRD_HEIGHT = 24
@@ -22,6 +25,7 @@ function PlayState:init()
     self.bird = Bird()
     self.pipePairs = {}
     self.timer = 0
+    self.next_pipe_time = NEXT_PIPE_MIN
     self.score = 0
 
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
@@ -33,7 +37,7 @@ function PlayState:update(dt)
     self.timer = self.timer + dt
 
     -- spawn a new pipe pair every second and a half
-    if self.timer > 2 then
+    if self.timer > self.next_pipe_time then
         -- modify the last Y coordinate we placed so pipe gaps aren't too far apart
         -- no higher than 10 pixels below the top edge of the screen,
         -- and no lower than a gap length (~90 pixels, +/- 10 pixels) from the bottom
@@ -44,8 +48,9 @@ function PlayState:update(dt)
         -- add a new pipe pair at the end of the screen at our new Y
         table.insert(self.pipePairs, PipePair(y))
 
-        -- reset timer
+        -- reset timer and choose when next pipe appears
         self.timer = 0
+        self.next_pipe_time = math.random(NEXT_PIPE_MIN, NEXT_PIPE_MAX)
     end
 
     -- for every pair of pipes..
