@@ -9,7 +9,12 @@
 * ~~Randomize the gap between pipes (vertical space).~~
 * ~~Randomize the interval at which pairs of pipes spawn.~~
 * ~~When a player enters the ScoreState, award them a “medal”.~~
-* Implement a pause feature.
+* ~~Implement a pause feature.~~
+
+Small enhancements:
+
+* Bird slightly tilts up when "jumping"
+* If the window loses focus, the game will pause
 
 Images Credit: 
 
