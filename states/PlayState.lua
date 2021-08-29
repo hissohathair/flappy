@@ -40,6 +40,10 @@ function PlayState:update(dt)
     if love.keyboard.wasPressed('p') then
         gStateMachine:change('pause')
         return
+    elseif not love.window.hasFocus() then
+        -- also pausing if user switches away from window
+        gStateMachine:change('pause')
+        return
     end
 
     -- update timer for pipe spawning
